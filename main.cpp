@@ -32,7 +32,7 @@ Purpose:  This project will show you the difference between member functions and
  
  6) finish instantiating the two T instances being declared in main(), based on the constructor you finished implementing in T
      Their names (line 105,106) are different than the member variables names (line 77), even tho the placeholders share the same name.
-     Don't let this confuse you.
+     Don't let this confuse you.clear
  
  7) Declare 'f' with the proper type so the call to f.compare works
  
@@ -54,23 +54,33 @@ Purpose:  This project will show you the difference between member functions and
 
 #include <iostream>
 #include <string>
+
 struct T
 {
-    T(<#type name#> v, const char* <#variable name#>)   //1
-    //2
-    //3
+    T(int v, const char* name);   //1
+
+    int value; //2
+    std::string name;//3
 };
 
-struct <#structName1#>                                //4
+T::T(int v, const char* name) :
+value(v),
+name(name)
+{}
+
+/*
+struct CompareObjects                                //4
 {
-    <#type name#> compare(<#type name#> a, <#type name#> b) //5
+    int* compare(int &a, int &b) //5
     {
         if( a->value < b->value ) return a;
         if( a->value > b->value ) return b;
         return nullptr;
     }
 };
+*/
 
+/*
 struct U
 {
     float <#name1#> { 0 }, <#name2#> { 0 };
@@ -79,7 +89,8 @@ struct U
         
     }
 };
-
+*/
+/*
 struct <#structname2#>
 {
     static <#returntype#> <#staticFunctionA#>(U* that, <#type name#>* <#updatedValue#> )        //10
@@ -89,16 +100,17 @@ struct <#structname2#>
         std::cout << "U's <#name1#> updated value: " << that-><#name1#> << std::endl;
         while( std::abs(that-><#name2#> - that-><#name1#>) > 0.001f )
         {
-            /*
-             write something that makes the distance between that-><#name2#> and that-><#name1#> get smaller
-             */
+            // 
+            // write something that makes the distance between that-><#name2#> and that-><#name1#> get smaller
+            // 
             that-><#name2#> += ;
         }
         std::cout << "U's <#name2#> updated value: " << that-><#name2#> << std::endl;
         return that-><#name2#> * that-><#name1#>;
     }
 };
-        
+*/
+
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
 
@@ -115,19 +127,19 @@ struct <#structname2#>
 
 int main()
 {
-    T <#name1#>( , );                                             //6
-    T <#name2#>( , );                                             //6
+    T t1( 10, "Terminator1");                                             //6
+    T t2( 20, "Terminator2");                                             //6
     
-    <#structName1#> f;                                            //7
-    auto* smaller = f.compare( , );                              //8
-    std::cout << "the smaller one is << " << smaller->name << std::endl; //9
+    // CompareObjects f;                                            //7
+//    auto* smaller = f.compare( , );                              //8
+//    std::cout << "the smaller one is << " << smaller->name << std::endl; //9
     
-    U <#name3#>;
-    float updatedValue = 5.f;
-    std::cout << "[static func] <#name3#>'s multiplied values: " << <#structname2#>::<#staticFunctionA#>( , ) << std::endl;                  //11
+//    U <#name3#>;
+//    float updatedValue = 5.f;
+//    std::cout << "[static func] <#name3#>'s multiplied values: " << <#structname2#>::<#staticFunctionA#>( , ) << std::endl;                  //11
     
-    U <#name4#>;
-    std::cout << "[member func] <#name4#>'s multiplied values: " << <#name4#>.<#memberFunction#>( &updatedValue ) << std::endl;
+//    U <#name4#>;
+//    std::cout << "[member func] <#name4#>'s multiplied values: " << <#name4#>.<#memberFunction#>( &updatedValue ) << std::endl;
 }
 
         
