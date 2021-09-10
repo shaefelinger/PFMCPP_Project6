@@ -32,7 +32,7 @@ Purpose:  This project will show you the difference between member functions and
  
  6) finish instantiating the two T instances being declared in main(), based on the constructor you finished implementing in T
      Their names (line 105,106) are different than the member variables names (line 77), even tho the placeholders share the same name.
-     Don't let this confuse you.clear
+     Don't let this confuse you.
  
  7) Declare 'f' with the proper type so the call to f.compare works
  
@@ -68,10 +68,9 @@ value(v),
 name(constructorName)
 {}
 
-
 struct CompareObjects                                //4
 {
-    int* compare(int* &a, int* &b) //5
+    T* compare(T* a, T* b) //5
     {
         if( a->value < b->value ) return a;
         if( a->value > b->value ) return b;
@@ -130,10 +129,11 @@ int main()
     T t1( 10, "Terminator1");                                             //6
     T t2( 20, "Terminator2");              
                               
-    
-    // CompareObjects f;                                            //7
-//    auto* smaller = f.compare( , );                              //8
-//    std::cout << "the smaller one is << " << smaller->name << std::endl; //9
+    CompareObjects f;                                            //7
+    auto* smaller = f.compare(&t1 , &t2);                              //8
+    std::cout << "the smaller one is " << smaller->name << std::endl; //9
+
+
     
 //    U <#name3#>;
 //    float updatedValue = 5.f;
