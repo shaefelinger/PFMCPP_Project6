@@ -63,22 +63,22 @@ struct T
     std::string name;//3
 };
 
-T::T(int v, const char* name) :
+T::T(int v, const char* constructorName) :
 value(v),
-name(name)
+name(constructorName)
 {}
 
-/*
+
 struct CompareObjects                                //4
 {
-    int* compare(int &a, int &b) //5
+    int* compare(int* &a, int* &b) //5
     {
         if( a->value < b->value ) return a;
         if( a->value > b->value ) return b;
         return nullptr;
     }
 };
-*/
+
 
 /*
 struct U
@@ -128,7 +128,8 @@ struct <#structname2#>
 int main()
 {
     T t1( 10, "Terminator1");                                             //6
-    T t2( 20, "Terminator2");                                             //6
+    T t2( 20, "Terminator2");              
+                              
     
     // CompareObjects f;                                            //7
 //    auto* smaller = f.compare( , );                              //8
