@@ -79,36 +79,36 @@ struct CompareObjects                                //4
 };
 
 
-/*
 struct U
 {
-    float <#name1#> { 0 }, <#name2#> { 0 };
-    <#returnType#> <#memberFunction#>(<#type name#>* <#updatedValue#>)      //12
-    {
-        
-    }
+    float uValue1 { 0 }, uValue2 { 0 };
+    // float uMemberFunction(float* <#updatedValue#>)      //12
+    // {
+    //    return 9.9f
+    //}
 };
-*/
-/*
-struct <#structname2#>
+
+
+struct staticStruct
 {
-    static <#returntype#> <#staticFunctionA#>(U* that, <#type name#>* <#updatedValue#> )        //10
+    static float reduceDistance(U* that, float updatedValue )        //10
     {
-        std::cout << "U's <#name1#> value: " << that-><#name1#> << std::endl;
-        that-><#name1#> = <#updatedValue#>;
-        std::cout << "U's <#name1#> updated value: " << that-><#name1#> << std::endl;
-        while( std::abs(that-><#name2#> - that-><#name1#>) > 0.001f )
+        std::cout << "U's uValue1 value: " << that->uValue1 << std::endl;
+        that->uValue1 = updatedValue;
+        std::cout << "U's uValue1 updated value: " << that->uValue1 << std::endl;
+        while( std::abs(that->uValue2 - that->uValue1) > 0.001f )
         {
             // 
             // write something that makes the distance between that-><#name2#> and that-><#name1#> get smaller
             // 
-            that-><#name2#> += ;
+
+            that->uValue2 += 10.f;
         }
-        std::cout << "U's <#name2#> updated value: " << that-><#name2#> << std::endl;
-        return that-><#name2#> * that-><#name1#>;
+        std::cout << "U's uValue2 updated value: " << that->uValue2 << std::endl;
+        return that->uValue2 * that->uValue1;
     }
 };
-*/
+
 
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
@@ -140,7 +140,7 @@ int main()
         std::cout << "Invalid Pointer or equal value" << std::endl;
     }
     
-//    U <#name3#>;
+    U instanceOfU;
 //    float updatedValue = 5.f;
 //    std::cout << "[static func] <#name3#>'s multiplied values: " << <#structname2#>::<#staticFunctionA#>( , ) << std::endl;                  //11
     
