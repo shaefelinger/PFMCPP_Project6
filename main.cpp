@@ -81,28 +81,38 @@ struct CompareObjects                                //4
 
 struct U
 {
-    float uValue1 { 0 }, uValue2 { 0 };
-    // float uMemberFunction(float* <#updatedValue#>)      //12
-    // {
-    //    return 9.9f
-    //}
+    float uValue1 { 111.1f }, uValue2 { 222.2f };
+    float reduceDistanceMember(float* updatedValue)      //12
+    {
+        std::cout << std::endl;
+        std::cout << "U's uValue1 value: " << this->uValue1 << std::endl;
+        this->uValue1 = *updatedValue;
+        std::cout << "U's uValue1 updated value: " << this->uValue1 << std::endl;
+        std::cout << "U's uValue2 initial value: " << this->uValue2 << std::endl;
+        while( std::abs(this->uValue2 - this->uValue1) > 0.001f )
+        {
+            this->uValue2 += 0.0001f;
+        }
+        std::cout << "U's uValue2 updated value: " << this->uValue2 << std::endl;
+        return this->uValue2 * this->uValue1;
+    }
 };
-
 
 struct staticStruct
 {
-    static float reduceDistance(U* that, float updatedValue )        //10
+    static float reduceDistance(U* that, float updatedValue)        //10
     {
+        std::cout << std::endl;
         std::cout << "U's uValue1 value: " << that->uValue1 << std::endl;
         that->uValue1 = updatedValue;
         std::cout << "U's uValue1 updated value: " << that->uValue1 << std::endl;
+        std::cout << "U's uValue2 initial value: " << that->uValue2 << std::endl;
         while( std::abs(that->uValue2 - that->uValue1) > 0.001f )
         {
             // 
             // write something that makes the distance between that-><#name2#> and that-><#name1#> get smaller
             // 
-
-            that->uValue2 += 10.f;
+            that->uValue2 += 0.0001f;
         }
         std::cout << "U's uValue2 updated value: " << that->uValue2 << std::endl;
         return that->uValue2 * that->uValue1;
@@ -141,11 +151,12 @@ int main()
     }
     
     U instanceOfU;
-//    float updatedValue = 5.f;
-//    std::cout << "[static func] <#name3#>'s multiplied values: " << <#structname2#>::<#staticFunctionA#>( , ) << std::endl;                  //11
+    float updatedValue = 555.5f;
     
-//    U <#name4#>;
-//    std::cout << "[member func] <#name4#>'s multiplied values: " << <#name4#>.<#memberFunction#>( &updatedValue ) << std::endl;
+    std::cout << "[static func] instanceOfU's multiplied values: " << staticStruct::reduceDistance( &instanceOfU , updatedValue) << std::endl;                  //11
+    
+    U anotherInstanceOfU;
+    std::cout << "[member func] anotherInstanceOfU's multiplied values: " << anotherInstanceOfU.reduceDistanceMember( &updatedValue ) << std::endl;
 }
 
         
