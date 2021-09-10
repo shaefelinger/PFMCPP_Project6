@@ -130,10 +130,15 @@ int main()
     T t2( 20, "Terminator2");              
                               
     CompareObjects f;                                            //7
-    auto* smaller = f.compare(&t1 , &t2);                              //8
-    std::cout << "the smaller one is " << smaller->name << std::endl; //9
-
-
+    auto* smaller = f.compare(&t1 , &t2);      
+    if (smaller != nullptr)
+    {
+        std::cout << "the smaller one is " <<  smaller->name << std::endl; //9
+    }                                                                  //8
+    else
+    {
+        std::cout << "Invalid Pointer or equal value" << std::endl;
+    }
     
 //    U <#name3#>;
 //    float updatedValue = 5.f;
