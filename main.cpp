@@ -72,17 +72,14 @@ struct CompareObjects                                //4
 {
     T* compare(T* a, T* b) //5
     {
-        if ( a == nullptr || b == nullptr)
+        if ( a != nullptr || b != nullptr)
         {
-            std::cout << "Your pointer is not valid!" << std::endl;
-            return nullptr;
-        }
-        if( a->value < b->value ) return a;
-        if( a->value > b->value ) return b;
+            if( a->value < b->value ) return a;
+            if( a->value > b->value ) return b;
+        }       
         return nullptr;
     }
 };
-
 
 struct U
 {
@@ -111,7 +108,7 @@ struct U
 
 struct staticStruct
 {
-    static float reduceDistance(U* that, float updatedValue)        //10
+    static float reduceDistance(U* that, float* updatedValue)        //10
     {
         if (that == nullptr)
         {
@@ -121,7 +118,7 @@ struct staticStruct
 
         std::cout << std::endl;
         std::cout << "U's uValue1 value: " << that->uValue1 << std::endl;
-        that->uValue1 = updatedValue;
+        that->uValue1 = *updatedValue;
         std::cout << "U's uValue1 updated value: " << that->uValue1 << std::endl;
         std::cout << "U's uValue2 initial value: " << that->uValue2 << std::endl;
         while( std::abs(that->uValue2 - that->uValue1) > 0.001f )
@@ -170,7 +167,7 @@ int main()
     U instanceOfU;
     float updatedValue = 5.f;
     
-    std::cout << "[static func] instanceOfU's multiplied values: " << staticStruct::reduceDistance( &instanceOfU , updatedValue) << std::endl;                  //11
+    std::cout << "[static func] instanceOfU's multiplied values: " << staticStruct::reduceDistance( &instanceOfU , &updatedValue) << std::endl;                  //11
     
     U anotherInstanceOfU;
     std::cout << "[member func] anotherInstanceOfU's multiplied values: " << anotherInstanceOfU.reduceDistanceMember( &updatedValue ) << std::endl;
