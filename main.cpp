@@ -54,51 +54,86 @@ Purpose:  This project will show you the difference between member functions and
 
 #include <iostream>
 #include <string>
+
 struct T
 {
-    T(<#type name#> v, const char* <#variable name#>)   //1
-    //2
-    //3
+    T(int v, const char* name);   //1
+
+    int value; //2
+    std::string name;//3
 };
 
-struct <#structName1#>                                //4
+T::T(int v, const char* constructorName) :
+value(v),
+name(constructorName)
+{}
+
+struct CompareObjects                                //4
 {
-    <#type name#> compare(<#type name#> a, <#type name#> b) //5
+    T* compare(T* a, T* b) //5
     {
-        if( a->value < b->value ) return a;
-        if( a->value > b->value ) return b;
+        if ( a != nullptr || b != nullptr)
+        {
+            if( a->value < b->value ) return a;
+            if( a->value > b->value ) return b;
+        }       
         return nullptr;
     }
 };
 
 struct U
 {
-    float <#name1#> { 0 }, <#name2#> { 0 };
-    <#returnType#> <#memberFunction#>(<#type name#>* <#updatedValue#>)      //12
+    float uValue1 { 0 }, uValue2 { 0 };
+    float reduceDistanceMember(float* updatedValue)
     {
-        
+        if (updatedValue == nullptr)
+        {
+            std::cout << "Your pointer is not valid!" << std::endl;
+            return 0;
+        }
+        std::cout << std::endl;
+        std::cout << "U's uValue1 value: " << this->uValue1 << std::endl;
+        this->uValue1 = *updatedValue;
+        std::cout << "U's uValue1 updated value: " << this->uValue1 << std::endl;
+        std::cout << "U's uValue2 initial value: " << this->uValue2 << std::endl;
+        while( std::abs(this->uValue2 - this->uValue1) > 0.001f )
+        {
+            this->uValue2 += 0.0001f;
+        }
+        std::cout << "U's uValue2 updated value: " << this->uValue2 << std::endl;
+        return this->uValue2 * this->uValue1;
+    }      //12
+    
+};
+
+struct staticStruct
+{
+    static float reduceDistance(U* that, float* updatedValue)        //10
+    {
+        if (that == nullptr || updatedValue == nullptr)
+        {
+            std::cout << "Your pointer is not valid!" << std::endl;
+            return 0;
+        }
+
+        std::cout << std::endl;
+        std::cout << "U's uValue1 value: " << that->uValue1 << std::endl;
+        that->uValue1 = *updatedValue;
+        std::cout << "U's uValue1 updated value: " << that->uValue1 << std::endl;
+        std::cout << "U's uValue2 initial value: " << that->uValue2 << std::endl;
+        while( std::abs(that->uValue2 - that->uValue1) > 0.001f )
+        {
+            // 
+            // write something that makes the distance between that-><#name2#> and that-><#name1#> get smaller
+            // 
+            that->uValue2 += 0.0001f;
+        }
+        std::cout << "U's uValue2 updated value: " << that->uValue2 << std::endl;
+        return that->uValue2 * that->uValue1;
     }
 };
 
-struct <#structname2#>
-{
-    static <#returntype#> <#staticFunctionA#>(U* that, <#type name#>* <#updatedValue#> )        //10
-    {
-        std::cout << "U's <#name1#> value: " << that-><#name1#> << std::endl;
-        that-><#name1#> = <#updatedValue#>;
-        std::cout << "U's <#name1#> updated value: " << that-><#name1#> << std::endl;
-        while( std::abs(that-><#name2#> - that-><#name1#>) > 0.001f )
-        {
-            /*
-             write something that makes the distance between that-><#name2#> and that-><#name1#> get smaller
-             */
-            that-><#name2#> += ;
-        }
-        std::cout << "U's <#name2#> updated value: " << that-><#name2#> << std::endl;
-        return that-><#name2#> * that-><#name1#>;
-    }
-};
-        
+
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
 
@@ -115,19 +150,27 @@ struct <#structname2#>
 
 int main()
 {
-    T <#name1#>( , );                                             //6
-    T <#name2#>( , );                                             //6
+    T t1( 10, "Terminator1");                                             //6
+    T t2( 20, "Terminator2");              
+                              
+    CompareObjects f;                                            //7
+    auto* smaller = f.compare(&t1 , &t2);      
+    if (smaller != nullptr)
+    {
+        std::cout << "the smaller one is " <<  smaller->name << std::endl; //9
+    }                                                                  //8
+    else
+    {
+        std::cout << "Invalid Pointer or equal value" << std::endl;
+    }
     
-    <#structName1#> f;                                            //7
-    auto* smaller = f.compare( , );                              //8
-    std::cout << "the smaller one is << " << smaller->name << std::endl; //9
-    
-    U <#name3#>;
+    U instanceOfU;
     float updatedValue = 5.f;
-    std::cout << "[static func] <#name3#>'s multiplied values: " << <#structname2#>::<#staticFunctionA#>( , ) << std::endl;                  //11
     
-    U <#name4#>;
-    std::cout << "[member func] <#name4#>'s multiplied values: " << <#name4#>.<#memberFunction#>( &updatedValue ) << std::endl;
+    std::cout << "[static func] instanceOfU's multiplied values: " << staticStruct::reduceDistance( &instanceOfU , &updatedValue) << std::endl;                  //11
+    
+    U anotherInstanceOfU;
+    std::cout << "[member func] anotherInstanceOfU's multiplied values: " << anotherInstanceOfU.reduceDistanceMember( &updatedValue) << std::endl;
 }
 
         
