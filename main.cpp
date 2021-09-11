@@ -110,7 +110,7 @@ struct staticStruct
 {
     static float reduceDistance(U* that, float* updatedValue)        //10
     {
-        if (that == nullptr)
+        if (that == nullptr || updatedValue == nullptr)
         {
             std::cout << "Your pointer is not valid!" << std::endl;
             return 0;
@@ -170,7 +170,7 @@ int main()
     std::cout << "[static func] instanceOfU's multiplied values: " << staticStruct::reduceDistance( &instanceOfU , &updatedValue) << std::endl;                  //11
     
     U anotherInstanceOfU;
-    std::cout << "[member func] anotherInstanceOfU's multiplied values: " << anotherInstanceOfU.reduceDistanceMember( &updatedValue ) << std::endl;
+    std::cout << "[member func] anotherInstanceOfU's multiplied values: " << anotherInstanceOfU.reduceDistanceMember( &updatedValue) << std::endl;
 }
 
         
