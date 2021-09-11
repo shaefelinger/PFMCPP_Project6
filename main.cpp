@@ -39,13 +39,10 @@ name(constructorName)
 
 struct CompareObjects                                //4
 {
-    T* compare(T* a, T* b) //5
+    T* compare(T& a, T& b) //5
     {
-        if ( a != nullptr || b != nullptr)
-        {
-            if( a->value < b->value ) return a;
-            if( a->value > b->value ) return b;
-        }       
+        if( a.value < b.value ) return &a;
+        if( a.value > b.value ) return &b;
         return nullptr;
     }
 };
@@ -53,16 +50,11 @@ struct CompareObjects                                //4
 struct U
 {
     float uValue1 { 0 }, uValue2 { 0 };
-    float reduceDistanceMember(float* updatedValue)
+    float reduceDistanceMember(const float& updatedValue)
     {
-        if (updatedValue == nullptr)
-        {
-            std::cout << "Your pointer is not valid!" << std::endl;
-            return 0;
-        }
         std::cout << std::endl;
         std::cout << "U's uValue1 value: " << this->uValue1 << std::endl;
-        this->uValue1 = *updatedValue;
+        this->uValue1 = updatedValue;
         std::cout << "U's uValue1 updated value: " << this->uValue1 << std::endl;
         std::cout << "U's uValue2 initial value: " << this->uValue2 << std::endl;
         while( std::abs(this->uValue2 - this->uValue1) > 0.001f )
@@ -72,33 +64,26 @@ struct U
         std::cout << "U's uValue2 updated value: " << this->uValue2 << std::endl;
         return this->uValue2 * this->uValue1;
     }      //12
-    
 };
 
 struct staticStruct
 {
-    static float reduceDistance(U* that, float* updatedValue)        //10
+    static float reduceDistance(U& that,const float& updatedValue)        //10
     {
-        if (that == nullptr || updatedValue == nullptr)
-        {
-            std::cout << "Your pointer is not valid!" << std::endl;
-            return 0;
-        }
-
         std::cout << std::endl;
-        std::cout << "U's uValue1 value: " << that->uValue1 << std::endl;
-        that->uValue1 = *updatedValue;
-        std::cout << "U's uValue1 updated value: " << that->uValue1 << std::endl;
-        std::cout << "U's uValue2 initial value: " << that->uValue2 << std::endl;
-        while( std::abs(that->uValue2 - that->uValue1) > 0.001f )
+        std::cout << "U's uValue1 value: " << that.uValue1 << std::endl;
+        that.uValue1 = updatedValue;
+        std::cout << "U's uValue1 updated value: " << that.uValue1 << std::endl;
+        std::cout << "U's uValue2 initial value: " << that.uValue2 << std::endl;
+        while( std::abs(that.uValue2 - that.uValue1) > 0.001f )
         {
             // 
             // write something that makes the distance between that-><#name2#> and that-><#name1#> get smaller
             // 
-            that->uValue2 += 0.0001f;
+            that.uValue2 += 0.0001f;
         }
-        std::cout << "U's uValue2 updated value: " << that->uValue2 << std::endl;
-        return that->uValue2 * that->uValue1;
+        std::cout << "U's uValue2 updated value: " << that.uValue2 << std::endl;
+        return that.uValue2 * that.uValue1;
     }
 };
 
@@ -123,23 +108,23 @@ int main()
     T t2( 20, "Terminator2");              
                               
     CompareObjects f;                                            //7
-    auto* smaller = f.compare(&t1 , &t2);      
+    auto* smaller = f.compare(t1, t2);      
     if (smaller != nullptr)
     {
         std::cout << "the smaller one is " <<  smaller->name << std::endl; //9
     }                                                                  //8
     else
     {
-        std::cout << "Invalid Pointer or equal value" << std::endl;
+        std::cout << "Equal value" << std::endl;
     }
     
     U instanceOfU;
     float updatedValue = 5.f;
     
-    std::cout << "[static func] instanceOfU's multiplied values: " << staticStruct::reduceDistance( &instanceOfU , &updatedValue) << std::endl;                  //11
+    std::cout << "[static func] instanceOfU's multiplied values: " << staticStruct::reduceDistance( instanceOfU , updatedValue) << std::endl;                  //11
     
     U anotherInstanceOfU;
-    std::cout << "[member func] anotherInstanceOfU's multiplied values: " << anotherInstanceOfU.reduceDistanceMember( &updatedValue) << std::endl;
+    std::cout << "[member func] anotherInstanceOfU's multiplied values: " << anotherInstanceOfU.reduceDistanceMember( updatedValue) << std::endl;
 }
 
         
